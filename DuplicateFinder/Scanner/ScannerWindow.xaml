@@ -1,0 +1,82 @@
+﻿<Window x:Class="DuplicateFinder.Scanner.ScannerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DuplicateFinder.Scanner"
+        mc:Ignorable="d"
+        Title="Skanowanie folderów" Height="360" Width="800" ResizeMode="NoResize" >
+
+    <StackPanel>
+        
+        <!--Folders-->
+        <Border Margin="5" Padding="5" IsEnabled="{Binding IsScanStopped, Mode=OneWay}" >
+            <StackPanel>
+                <TextBlock>Foldery do skanowania:</TextBlock>
+                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox x:Name="directoriesToScanList" Grid.Column="0" ItemsSource="{Binding DirectoriesToScan, Mode=OneWay}" Height="120" />
+                    <StackPanel Grid.Column="1">
+                        <Button Margin="5" Command="{Binding AddScanDirectory, Mode=OneWay}">Dodaj folder</Button>
+                        <Button Margin="5" Command="{Binding RemoveScanDirectory, Mode=OneWay}" CommandParameter="{Binding ElementName=directoriesToScanList, Path=SelectedValue}">Usuń folder</Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+        
+        <!--Runner-->
+        <Border Margin="10" IsEnabled="{Binding IsScanRunning, Mode=OneWay}" >
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="10" >
+                    <ProgressBar Margin="5" Maximum="{Binding FilesDiscoveredCount, Mode=OneWay}" Value="{Binding FilesCalculatedCount, Mode=OneWay}" Height="40" />
+                    <TextBlock Margin="5" Text="{Binding LastFileCalculated, Mode=OneWay}" />
+                </StackPanel>
+
+                <Grid Grid.Row="1" Grid.Column="1" Margin="10" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Text="Odnalezione pliki" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="10" Text="{Binding FilesDiscoveredCount, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" Text="Zapisano pliki" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding FilesCalculatedCount, Mode=OneWay}" />
+                </Grid>
+            </Grid>
+        </Border>
+        
+        
+
+        <!--Buttons-->
+        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button  Margin="5" Content="Start" Command="{Binding StartScan, Mode=OneTime}" Width="80" Height="30" />
+            <Button  Margin="5" Content="Stop" Command="{Binding StopScan, Mode=OneTime}" Width="80" Height="30" />
+        </StackPanel>
+
+
+    </StackPanel>
+
+
+
+
+
+    
+        
+    
+</Window>
