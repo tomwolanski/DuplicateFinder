@@ -108,19 +108,15 @@ namespace DuplicateFinder
 
             FileStructure.Clear();
 
-            var data = GetFileStructoreAsync();
-            //data.ForEach(FileStructure.Add);
-
+            var data = GetFileStructure();
             FileStructure.AddRange(data);
 
             IsLoading = false;
         }
 
-        private IEnumerable<FileStructureItemBase> GetFileStructoreAsync()
+        private IEnumerable<FileStructureItemBase> GetFileStructure()
         {
-            var files = _db.Files.ReadAll().ToArray();
-            var duplicateSelector = GetDuplicateSelector(files, _duplicateSelectionHandlerObs.Value);
-
+            var files = _db.Files.ReadAll();
             return GetFromFiles(files);
         }
 
